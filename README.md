@@ -38,7 +38,7 @@ Users should be able to:
 ### Links
 
 - **Solution URL**: [https://github.com/amikoelvis/Product-List-With-Cart](https://github.com/amikoelvis/Product-List-With-Cart)
-- **Live Site URL**: [https://your-live-site-url.com](https://your-live-site-url.com)
+- **Live Site URL**: [https://product-list-with-cart-beige.vercel.app/](https://product-list-with-cart-beige.vercel.app/)
 
 ## My Process
 
@@ -80,7 +80,7 @@ In the future, I plan to:
 
 ## Author
 
-- Website - [Amiko Elvis](https://results-summary-component-plum-one.vercel.app/)
+- Website - [Amiko Elvis](https://product-list-with-cart-beige.vercel.app/)
 - Frontend Mentor - [@amikoelvis](https://www.frontendmentor.io/profile/amikoelvis)
 - Twitter - [@ElvisAmiko](https://www.twitter.com/ElvisAmiko)
 
