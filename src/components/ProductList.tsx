@@ -3,20 +3,29 @@ import useCartStore from '../store/cartStore'
 import { products, type Product } from '../data/products'
 
 const ProductList: React.FC = () => {
-  const addToCart = useCartStore((state) => state.addToCart)
+    const addToCart = useCartStore((state) => state.addToCart)
+    const cartItems = useCartStore((state) => state.cartItems)
+    const increaseQuantity = useCartStore((state) => state.increaseQuantity)
+    const decreaseQuantity = useCartStore((state) => state.decreaseQuantity)
+
+    const isInCart = (id: number) => cartItems.some(item => item.id === id)
+    const getQuantity = (id: number) => cartItems.find(item => item.id === id)?.quantity || 0
+
 
   return (
-    <section className="p-4">
+    <section className="">
       {/* Heading */}
-      <h2 className="text-2xl font-bold mb-4">Desserts</h2>
+      <h2 className="text-6xl md:text-7xl lg:text-4xl font-bold mb-12 lg:mb-6">Desserts</h2>
 
       {/* Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {products.map((product: Product) => (
           <div key={product.id} className="flex flex-col items-center overflow-visible">
             {/* Card */}
-            <article className="relative rounded-lg overflow-visible shadow-sm bg-white w-full">
-              <div className="relative">
+            <article className="relative rounded-4xl overflow-visible shadow-sm bg-white w-full">
+              <div className={`relative rounded-lg ${
+    isInCart(product.id) ? 'border-2 border-orange-700' : 'border-transparent'
+  }`}>
                 <picture>
                   <source media="(min-width:1024px)" srcSet={product.image.desktop} />
                   <source media="(min-width:768px)" srcSet={product.image.tablet} />
@@ -28,28 +37,40 @@ const ProductList: React.FC = () => {
                   />
                 </picture>
 
-                {/* Button */}
-                <button
-                  onClick={() => addToCart(product)}
-                  className="absolute border border-rose-900 -bottom-5 left-1/2 transform -translate-x-1/2 bg-white hover:border hover:border-rose-500 focus:ring-4 focus:ring-rose-300 rounded-full px-5 py-2 shadow-lg flex items-center justify-center gap-2 z-10 whitespace-nowrap"
-                  aria-label={`Add ${product.name} to cart`}
-                >
-                  <img
-                    src="/assets/icon-add-to-cart.svg"
-                    alt=""
-                    aria-hidden="true"
-                    className="w-5 h-5"
-                  />
-                  <span className="text-black font-semibold text-sm hover:text-rose-500">Add to Cart</span>
-                </button>
+                <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 w-[160px]">
+  {!isInCart(product.id) ? (
+    <button
+      onClick={() => addToCart(product)}
+      className="w-full bg-white border border-rose-300 hover:border-rose-500 text-rose-900 font-semibold text-sm py-2 px-4 rounded-full shadow-md flex items-center justify-center gap-2"
+    >
+      <img src="/assets/icon-add-to-cart.svg" alt="Add" className="w-4 h-4" />
+      Add to Cart
+    </button>
+  ) : (
+    <div className="w-full bg-orange-700 font-semibold text-sm py-2 px-4 rounded-full shadow-md flex items-center justify-between">
+      <button onClick={() => decreaseQuantity(product.id)}>
+        <div className="w-4 h-4 flex items-center justify-center rounded-full border border-white">
+          <img src="/assets/icon-decrement-quantity.svg" alt="Decrease" className="w-2 h-2" />
+        </div>
+      </button>
+      <span className='text-white'>{getQuantity(product.id)}</span>
+      <button onClick={() => increaseQuantity(product.id)}>
+        <div className="w-4 h-4 flex items-center justify-center rounded-full border border-white">
+      <img src="/assets/icon-increment-quantity.svg" alt="Increase" className="w-2 h-2" />
+    </div>
+      </button>
+    </div>
+  )}
+</div>
+
               </div>
             </article>
 
             {/* Product Info */}
             <div className="mt-8 text-left w-full">
               <p className="text-sm text-gray-500">{product.category}</p>
-              <h3 className="text-lg font-semibold">{product.name}</h3>
-              <p className="text-base font-bold text-red-400">${product.price.toFixed(2)}</p>
+              <h3 className="text-lg lg:text-sm font-bold">{product.name}</h3>
+              <p className="text-base font-bold text-orange-700">${product.price.toFixed(2)}</p>
             </div>
           </div>
         ))}

@@ -1,5 +1,6 @@
-import { create } from "zustand";
-import type { Product } from "../data/products";
+// src/store/cartStore.ts
+import { create } from 'zustand';
+import type { Product } from '../data/products';
 
 export interface CartItem extends Product {
   quantity: number;
@@ -12,6 +13,9 @@ interface CartState {
   increaseQuantity: (id: number) => void;
   decreaseQuantity: (id: number) => void;
   resetCart: () => void;
+  isModalOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 const useCartStore = create<CartState>((set) => ({
@@ -47,6 +51,9 @@ const useCartStore = create<CartState>((set) => ({
         .filter((item) => item.quantity > 0),
     })),
   resetCart: () => set({ cartItems: [] }),
+  isModalOpen: false,
+  openModal: () => set({ isModalOpen: true }),
+  closeModal: () => set({ isModalOpen: false }),
 }));
 
 export default useCartStore;

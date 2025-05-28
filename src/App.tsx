@@ -7,7 +7,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="" element={<ConfirmOrder />} />
+        <Route path="/confirm-order" element={<ConfirmOrder />} />
       </Routes>
     </Router>
   );
